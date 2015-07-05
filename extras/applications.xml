@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<!-- This XML file is an example -->
+<apps>
+<application id="1">
+	<name>Editor</name>
+	<author>John</author>
+	<bugs>
+		<bug>
+			<!-- This is one bug -->
+			<desc>Foo</desc>
+			<sev>2</sev>
+		</bug>
+		<bug>
+			<desc>Bar</desc>
+			<sev>3</sev>
+		</bug>
+	</bugs>
+</application>
+<application id="2">
+	<name>Compiler</name>
+	<author>Peter</author>
+	<bugs>
+		<bug>
+		<desc>Foo Bar</desc>
+			<sev>5</sev>
+		</bug>
+	</bugs>
+</application>
+</apps>
+

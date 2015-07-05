@@ -1,0 +1,567 @@
+<html>
+<head>
+<title>XQuery Lite (class_xquery_lite.php)</title>
+<link rel="stylesheet" href="main.css" type="text/css">
+</head>
+
+<body>
+
+<div align="center">
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#aaaaee" class="textblbl" align="center">XqueryLite (class_xquery_lite.php)</td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">Description: This is a PHP implementation of the <a href="xquery_lite.html">Xquery Lite</a>
+  language for XML query. This implementation is based on the PHP DOM extension (it uses Xpath). It is 100% compatible with 
+  Xquery Lite.
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+  <td valign="top" class="text" width="50%"><b>NEWS:</b>
+  <ul>
+    <li>First release of this class
+  </ul>
+  </td>
+  <td valign="top" width="50%" class="text">
+     This class code as well as documentation are hosted at <a href="http://www.sourceforge.net">SourceForge</a>
+     please visit our <a href="http://www.sourceforge.net/projects/phpxmlclasses/">SourceForge page</a> for releases, documentation, bug-tracking, support
+     forums and mailing lists.
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td class="textbl" bgcolor="aaaaee" width="50%">Features</td>
+  <td class="textbl" bgcolor="aaaaee" width="50%">To-dos</td>
+</tr>
+</table>
+<table border="1" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td valign="top" bgcolor="eeeeff" class="text" width="50%">
+  <ul>
+    <li>Xquery Lite 1.0 supported.
+  </ul>
+  </td>
+  <td valign="top" bgcolor="ddddff" class="text" width="50%">
+  <ul>
+    <li>Support the new release of the Xquery Lite language adding if statements, sortby statements and others.
+    <li>Queries may be "unsafe" if the user may enter a query, so a small security check is needed in order to
+    allow user-entered queries without a problem.
+  </ul>
+  </td>
+  
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+<!--
+  <td valign="top" class="text" width="50%"><b>To-do/future releases:</b>
+  <ul>
+    <li>Class 
+    <li>Class 
+    <li>Class 
+  </ul>
+  </td> -->
+  <td valign="top" width="100%" class="text">
+     Contact: Luis Argerich (<a href="mailto:lrargerich@yahoo.com">lrargerich@yahoo.com</a>)
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+<!--
+  <td valign="top" class="text" width="50%"><b>To-do/future releases:</b>
+  <ul>
+    <li>Class 
+    <li>Class 
+    <li>Class 
+  </ul>
+  </td> -->
+  <td valign="top" width="100%" class="text">
+     Detailed description and usage: The usage of this class is easy, basically you just create an object
+     and then use init to initialize the object and the evaluate_xqueryl method to process a qery:
+     <pre>$xq=new XqueryLite();
+$xq->init();
+$result=$xq->evaluate_xqueryl($query);</pre>
+     If you need to process a second query call the init method to reset object internal state to the
+     initial state. In order to learn more about Xquery Lite and how to write a query please visit the
+     <a href="xquery_lite.html">Xquery Lite home page</a>
+  </td>
+</tr>
+</table>
+<br/>
+</div>
+
+<h3>Documentation</h3>
+
+<h2>Classes</h2>
+<ul>
+  <li><a href="#class27">XqueryLite</a></li>
+</ul>
+
+<a name="#class27"></a>
+<h3>XqueryLite</h3>
+Extends: None<hr>
+Description: This class implements the Xquery Lite 1.0 language, a querying language for XML based on Xquery 1.0 using Xpath and FLWR expressions as the foundations.<hr>
+<br>
+
+<!-- METHOD SUMMARY -->
+<A NAME="pDomNode_method_summary"><!-- --></A>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TD>
+</TR>
+
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method1">XqueryLite</A></B>()</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Constructor</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method2">init</A></B>()</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Initializes the object internal state to the initial state</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method3">evaluate_xqueryl</A></B>(string $query)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluates an Xquery Lite 1.0 query</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;array</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method4">_tokenize</A></B>(string $exp)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Tokenizes a Xquery Lite expression and returns statements in an array</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method5">_get_root_name</A></B>(object $node)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Returns the root tagname from a node</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method6">_parse_for</A></B>(string $expr)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Parses a for statement</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;array</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method7">_distinct</A></B>(array $nodeset)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Filters a nodeset returning a nodeset without duplicate nodes</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method8">_normalize_elements</A></B>(object $node)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Normalize a dom subtree removing whitespace</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method9">_parse_var</A></B>(string $expr, boolean $norm)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Parses an Xquery $a/xpath_expr expression</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method10">_count_var</A></B>(string $expr)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) counts the number of elements in a $a/xpath_expr expression</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method11">_parse_where</A></B>(string $expr)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Parses a where statement</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method12">_parse_return</A></B>(string $expr)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Parses a return statement</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method13">_parse_let</A></B>(string $expr)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Parses a let statement</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;array</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method14">_split_fors</A></B>(string $exprs)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Split a for statement in several if it has to</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class27method15">_parse_query</A></B>(string $query)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(PRIVATE) Parses a Xquery Lite expression</TD>
+</TR>
+<!-- A ROW -->
+</TABLE>
+&nbsp;
+<P>
+<!-- METHOD SUMMARY -->
+
+
+<!-- ============ METHOD DETAIL ========== -->
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TD>
+</TR>
+</TABLE>
+
+
+<!--  method -->
+<A NAME="#class27method1"><!-- --></A>
+<H3>XqueryLite</H3>
+
+
+
+<PRE>
+void <B>XqueryLite</B>()</PRE>
+               
+<DL>
+<DD>This is the constructor receives nothing, does nothing, return nothing.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method2"><!-- --></A>
+<H3>init</H3>
+
+
+
+<PRE>
+void <B>init</B>()</PRE>
+               
+<DL>
+<DD>This is an important method since it must be called before a query is evaluated (before each query) to initialize the interpreter internal state<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method3"><!-- --></A>
+<H3>evaluate_xqueryl</H3>
+
+
+
+<PRE>
+string <B>evaluate_xqueryl</B>(string $query)</PRE>
+               
+<DL>
+<DD>This method is used to evaluate an Xquery Lite 1.0 query, just pass the query as an argument and receive the result.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $query - The Xquery Lite 1.0 query<br><DT><B>Returns:</B><DD>The result of the query whatever it is<DT><B>Throws:</B><DD><CODE>Several exceptions can be reaised as warnings if an error occurs when parsing the query, tipically the query has a syntax error or the XML source can't be located.</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method4"><!-- --></A>
+<H3>_tokenize</H3>
+
+
+
+<PRE>
+array <B>_tokenize</B>(string $exp)</PRE>
+               
+<DL>
+<DD>This private method receives a Xquery Lite expression (whatever is found between curly brackets) and returns an array of statements, for example v[0]=a for statament, v[1]=a let statement, v[2]=a where statement, v[3]=return statement.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $exp - An Xquery expression (without starting and ending curly brackets). Sentences must be sepperated by whitespace (blank, newline or tabs)<br><DT><B>Returns:</B><DD>An array where each array position contains an statement<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method5"><!-- --></A>
+<H3>_get_root_name</H3>
+
+
+
+<PRE>
+string <B>_get_root_name</B>(object $node)</PRE>
+               
+<DL>
+<DD>This method returns the name of the root element from an XML fragment passed as a node.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $node - A dom node<br><DT><B>Returns:</B><DD>The name of the root element<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method6"><!-- --></A>
+<H3>_parse_for</H3>
+
+
+
+<PRE>
+string <B>_parse_for</B>(string $expr)</PRE>
+               
+<DL>
+<DD>This method parses a for statement and puts the nodeset resulting from the for statement in the object result_sets member.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $expr - The for statement it must be in extended notation (can't admit several fors sepparated by commas)<br><DT><B>Returns:</B><DD>The name of the Xquery variable corresponding to the for statement.<DT><B>Throws:</B><DD><CODE>It can raise an error if the XML source is not found, if it is not well formed or if the Xpath expression in the for statement is wrong</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method7"><!-- --></A>
+<H3>_distinct</H3>
+
+
+
+<PRE>
+array <B>_distinct</B>(array $nodeset)</PRE>
+               
+<DL>
+<DD>Filters a nodeset returning a nodeset without duplicate nodes, the normalize_elements function is used in order to compare nodes and find duplicate nodes in the nodeset.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $nodeset - Array of dom nodes<br><DT><B>Returns:</B><DD>An array of nodes (another nodeset) without duplicate nodes<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method8"><!-- --></A>
+<H3>_normalize_elements</H3>
+
+
+
+<PRE>
+string <B>_normalize_elements</B>(object $node)</PRE>
+               
+<DL>
+<DD>This function normalizes a dom subtree removing all whitespace elements thus producing a normalized representation of the subtree that can be used in comparisons.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $node - A dom node that is the root of the subtree to be normalized<br><DT><B>Returns:</B><DD>An string containing a normalized dump of the subtree<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method9"><!-- --></A>
+<H3>_parse_var</H3>
+
+
+
+<PRE>
+string <B>_parse_var</B>(string $expr, boolean $norm)</PRE>
+               
+<DL>
+<DD>This method parses an Xquery expression in the form $a/xpath_expr where $a is an Xquery Lite variable previously assigned by a for or let statement<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $expr - The expression to be parsed<br>$norm - If this parameter is true the method returns a normalized representation of the result.<br><DT><B>Returns:</B><DD>A string representing the result, if the result is a nodeset then all nodes are concatenated one after the other.<DT><B>Throws:</B><DD><CODE>It can raise an exception if the xpath expression has an error or if the variable is not well formed XML</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method10"><!-- --></A>
+<H3>_count_var</H3>
+
+
+
+<PRE>
+int <B>_count_var</B>(string $expr)</PRE>
+               
+<DL>
+<DD>This method parses a $a/xpath_expr expression and returns the number of elements in the nodeset, it is used to process count(expr) constructions in the query.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $expr - The expression<br><DT><B>Returns:</B><DD>The number of elements in the nodeset if no xpath expression is passed returns 1 if the variable exists if the nodeset is empty returns 0<DT><B>Throws:</B><DD><CODE>It can raise an error if the variable is not XML if it doesn't exist or it the Xpath expression is wrong.</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method11"><!-- --></A>
+<H3>_parse_where</H3>
+
+
+
+<PRE>
+boolean <B>_parse_where</B>(string $expr)</PRE>
+               
+<DL>
+<DD>This method parses a where statement returning true/false after parsing the expresion<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $expr - The where statement<br><DT><B>Returns:</B><DD>The result of the where expression<DT><B>Throws:</B><DD><CODE>If there's an error in the expression it raises an error</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method12"><!-- --></A>
+<H3>_parse_return</H3>
+
+
+
+<PRE>
+string <B>_parse_return</B>(string $expr)</PRE>
+               
+<DL>
+<DD>This method parses a return statement returning the result of the return statement as a string if the return statement contains sub-queries then this method calls the evaluate_xqueryl recursively to process them<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $expr - The return statement, everything found from the return word to the end of the query, including the return word.<br><DT><B>Returns:</B><DD>The result of the return statement<DT><B>Throws:</B><DD><CODE>Several errors can be raised since this can potentially call evaluate_xqueryl</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method13"><!-- --></A>
+<H3>_parse_let</H3>
+
+<PRE>
+void <B>_parse_let</B>(string $expr)</PRE>
+               
+<DL>
+<DD>This parses a let statement updating the "bindings" object variable with the value of the expression for the designated variable.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $expr - The let statement<br><DT><B>Returns:</B><DD>nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method14"><!-- --></A>
+<H3>_split_fors</H3>
+
+
+
+<PRE>
+array <B>_split_fors</B>(string $exprs)</PRE>
+               
+<DL>
+<DD>A for statement may include several for statements sepparated with commas (compact notation) this method splits the compact for notation in an array of extended for statements<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $exprs - A for statement in compact or extended notation<br><DT><B>Returns:</B><DD>An array where each element is a for statement<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class27method15"><!-- --></A>
+<H3>_parse_query</H3>
+
+
+
+<PRE>
+string <B>_parse_query</B>(string $query)</PRE>
+               
+<DL>
+<DD>This method parses an Xquery Lite expression and returns the result, the expresion is a FLWR lite expression defined in the Xquery Lite 1.0 language this method identifies FOR, LET, WHERE and RETURN statements, and process them accordingly.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $query - The Xquery Lite expression to be parsed<br><DT><B>Returns:</B><DD>The result of the query<DT><B>Throws:</B><DD><CODE>If there's an error when parsing the query</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!-- ============ METHOD DETAIL ========== -->
+
+
+
+
+
+</body>
+</html>

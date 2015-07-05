@@ -1,0 +1,173 @@
+<?
+if ( !defined( 'XINDICE_LIBRARY' ) )
+{
+define( 'XINDICE_LIBRARY', TRUE );
+
+// ##################################################################################
+// Title                     : class_xindice.php
+// Version                   : 1.0
+// Author                    : Luis Argerich (lrargerich@yahoo.com)
+// Last modification date    : 05-15-2002
+// Description               : This class allows you to use an Xindice server
+//                             from PHP using the XML-RPC API.
+// ##################################################################################
+// History: 
+// 05-15-2002     First release of this class
+// ##################################################################################
+// To-Dos:
+// ##################################################################################
+// How to use it:
+// Check the example "test.php" for several examples about how to use this class
+// usage is straightforward.
+// ##################################################################################
+
+if ( !defined( 'XMLRPC_LIBRARY' ) ) include( LIBRARY_PATH.'xmlrpc.library' );
+//include_once("xmlrpc/xmlrpc.inc");
+
+class Xindice {
+  var $client;
+  var $error;
+
+  function getError() {
+    return $this->error;
+  }
+
+  function setXmlRpcDebug($debug) {
+    $this->client->setDebug($debug);
+  }
+
+  function Xindice($server_uri,$server_port=4080) {
+    $this->client=new xmlrpc_client("/",$server_uri,$server_port);
+  }
+
+  // Collection management functions 
+
+  function listCollections($collection) {
+    $paths=split('/',$collection);
+    $method=$paths[1].'.'."listCollections";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collection,"string")));
+    return $this->sendMsg($msg);
+  }
+
+
+  function getDocumentCount($collectionPath) {
+    $paths=split('/',$collectionPath);
+    $method=$paths[1].'.'."getDocumentCount";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collectionPath,"string")));
+    return $this->sendMsg($msg);
+  } 
+
+  function createCollection($base,$collectionName) {
+    $paths=split('/',$base);
+    $method=$paths[1].'.'."createCollection";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($base,"string"),new xmlrpcval($collectionName,"string"))); 
+    return $this->sendMsg($msg);
+  }
+
+  function dropCollection($collectionPath) {
+    $paths=split('/',$collectionPath);
+    $method=$paths[1].'.'."dropCollection";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collectionPath)));
+    return $this->sendMsg($msg);
+  }  
+
+  // Document management functions
+
+  function insertDocument($collection,$id,$content) {
+    $paths=split('/',$collection);
+    $method=$paths[1].'.'."insertDocument";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collection,"string"),new xmlrpcval($id,"string"),new xmlrpcval($content,"string")));
+    return $this->sendMsg($msg);
+  }
+
+  function setDocument($collection,$id,$content) {
+
+  }  
+
+  function getDocument($collection,$id) {
+    $paths=split('/',$collection);
+    $method=$paths[1].'.'."getDocument";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collection,"string"),new xmlrpcval($id,"string")));
+    return $this->sendMsg($msg);
+  }
+
+  function listDocuments($collection) {
+    $paths=split('/',$collection);
+    $method=$paths[1].'.'."listDocuments";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collection,"string")));
+    return $this->sendMsg($msg);
+  }
+
+  function removeDocument($collection,$id) {
+    $paths=split('/',$collection);
+    $method=$paths[1].'.'."removeDocument";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collection,"string"),new xmlrpcval($id,"string")));
+    return $this->sendMsg($msg);
+  }
+
+  // Index management functions
+  function createIndexer($collection,$indexName,$pattern) {
+    $paths=split('/',$collection);
+    $method=$paths[1].'.'."createIndexer";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collection,"string"),new xmlrpcval($indexName,"string"),new xmlrpcval($pattern,"string")));
+    return $this->sendMsg($msg);
+  }
+ 
+  function dropIndexer($collection,$indexName) {
+    $paths=split('/',$collection);
+    $method=$paths[1].'.'."dropIndexer";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collection,"string"),new xmlrpcval($indexName,"string")));
+    return $this->sendMsg($msg);
+  }
+
+  function listIndexers($collection) {
+    $paths=split('/',$collection);
+    $method=$paths[1].'.'."listIndexer";
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collection,"string")));                    
+    return $this->sendMsg($msg);
+  }  
+ 
+  // Query functions
+
+  function queryDocument($collection,$type,$query,$id) {
+    $paths=split('/',$collection);
+    $method=$paths[1].'.'."queryDocument"; 
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collection,"string"),new xmlrpcval($type,"string"),new xmlrpcval($query),new xmlrpcval(Array(),"struct"),new xmlrpcval($id,"string")));
+    return $this->sendMsg($msg);
+
+  }
+
+  function queryCollection($collection,$type,$query) {
+    $paths=split('/',$collection);
+    $method=$paths[1].'.'."queryCollection"; 
+    $msg=new xmlrpcmsg($method,array(new xmlrpcval($collection,"string"),new xmlrpcval($type,"string"),new xmlrpcval($query),new xmlrpcval(Array(),"struct")));
+    return $this->sendMsg($msg);
+
+  }
+
+  // PRIVATE METHODS
+  function getBase($collection) {
+    $paths=split('/',$collection);
+    return $paths[0];
+  }
+
+  function sendMsg($msg) {
+    $result=$this->client->send($msg);
+    if(!$result) {
+      $this->error='Cannot send xmlrpc message to the server';
+      return 0;
+    }
+    if($result->faultCode()) {
+      $this->error=$result->faultString();
+      return 0;
+    }
+    $ret=xmlrpc_decode($result->value());
+    return $ret;
+  }
+
+
+}
+
+
+}
+?>

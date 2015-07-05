@@ -1,0 +1,271 @@
+<?php
+if ( !defined( 'RDDLPARSER_LIBRARY' ) )
+{
+define( 'RDDLPARSER_LIBRARY' TRUE );
+
+// ##################################################################################
+// Title                     : Class RDDL_parser
+// Version                   : 1.0
+// Author                    : Luis Argerich (lrargerich@yahoo.com)
+// Last modification date    : 06-20-2002
+// Description               : A class to parse RDDL documents.
+//                             Can parse documents from files or URIs.
+//                             Once you parsed the RDDL document you get a list of resources
+//                             to process them.
+// ##################################################################################
+// History: 
+// 06-20-2002                : First version of this class.
+// ##################################################################################
+// To-Dos:
+//
+// ##################################################################################
+// How to use it:
+// Read the documentation in rddl_parser.html
+// ##################################################################################
+
+if(defined("_class_rddl_parser_is_included")) {
+  // do nothing since the class is already included  
+} else {
+  define("_class_rddl_parser_is_included",1);
+
+define("NAMESPACE_SEPARATOR_CHAR","^");
+define("RDDL_NAMESPACE_NAME","http://www.rddl.org/");
+define("XLINK_NAMESPACE_NAME","http://www.w3.org/1999/xlink");
+
+
+
+class RDDL_parser {
+  var $resources=Array();
+  var $base='';
+  var $parser;
+  var $error='';
+
+  function get_error() {
+    return $this->error; 
+  }
+     
+  function get_resources() {
+    return $this->resources;
+  }
+  
+  function rddl_parse($rddl) {
+    $this->base=$rddl;
+    $this->parser = xml_parser_create_ns("",NAMESPACE_SEPARATOR_CHAR);
+    xml_set_object($this->parser,&$this);
+    xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false);
+    xml_set_element_handler($this->parser, "startElement", "endElement");
+    if (!($fp = fopen($rddl, "r"))) {
+      $this->error="Cannot open $rddl";
+      return false;
+    }
+    while ($data = fread($fp, 4096)) {
+      if (!xml_parse($this->parser, $data, feof($fp))) {
+        $this->error="XML error: ".xml_error_string(xml_get_error_code($this->parser))." at line ".xml_get_current_line_number($this->parser);
+        return false;                    
+      }
+    }
+    xml_parser_free($this->parser);
+    return true;
+  }
+
+  function startElement($parser, $name, $attrs) {
+    $name_components=explode(NAMESPACE_SEPARATOR_CHAR,$name);
+    if(strstr($name_components[0],RDDL_NAMESPACE_NAME)) {
+      
+      foreach($attrs as $atk =>$atv) {
+        if(strstr($atk,XLINK_NAMESPACE_NAME)) {
+           $atrib_parts=explode(NAMESPACE_SEPARATOR_CHAR,$atk);
+           $atk=$atrib_parts[1];
+           
+        }
+        if($atk=="href") {
+          $this->_resolve_uri_reference($this->base,$atv,$buffer,0);
+          $atv=$buffer;
+          
+        }
+      
+        $elem[$atk]=$atv;
+      }
+      $this->resources[]=$elem;
+    }
+    //print "$name<br/>";
+  }
+
+  function endElement($parser, $name) {
+  }
+
+
+  function _parse_uri($uri,$buffer,$len,&$scheme,&$authority,&$path,&$query,&$fragment ) {
+    $parsed=parse_url($uri);
+    if(isset($parsed["scheme"])) {
+      $scheme=$parsed["scheme"];} else {
+  	  $scheme='';
+    }
+    if(isset($parsed["host"])) {
+      $host=$parsed["host"];} else {
+  	  $host='';
+    }
+    if(isset($parsed["host"])) {
+      $authority=$parsed["host"];} else {
+  	  $authority='';
+    }
+    if(isset($parsed["path"])) {
+      $path=$parsed["path"];} else {
+  	  $path='';
+    }
+    if(isset($parsed["query"])) {
+      $query=$parsed["query"];} else {
+    	$query='';
+    }
+    if(isset($parsed["fragment"])) {
+      $fragment=$parsed["fragment"];} else {
+    	$fragment='';
+    }
+  }
+
+
+  function _resolve_uri_reference($base_uri,$reference_uri,&$buffer,$length ) {
+	$base_buffer='';
+	$reference_buffer='';
+	$path_buffer='';
+
+	$buffer = '';
+
+	$this->_parse_uri($reference_uri,$reference_buffer,strlen( $reference_buffer ),$reference_scheme,$reference_authority,
+		$reference_path,$reference_query,$reference_fragment );
+
+	if( $reference_scheme == ''
+		&& $reference_authority == ''
+		&& $reference_path == ''
+		&& $reference_query == '' )
+	{
+		$buffer=$base_uri;
+
+		if( $reference_fragment != '' )
+		{
+			$buffer.= "#" ;
+			$buffer.=$reference_fragment;
+		}
+	}
+	else if( $reference_scheme != '' )
+	{
+		$buffer=$reference_uri;
+	}
+	else
+	{
+		$this->_parse_uri(
+			$base_uri,
+			$base_buffer,
+			strlen( $base_buffer ),
+			$base_scheme,
+			$base_authority,
+			$base_path,
+			$base_query,
+			$base_fragment );
+
+		$result_scheme = $base_scheme;
+
+		if( $reference_authority != '' )
+		{
+			$result_authority = $reference_authority;
+		}
+		else
+		{
+			$result_authority = $base_authority;
+
+			if( $reference_path != '' 
+				&& ( ($reference_path{0} == '/')  
+					|| ($reference_path{0} ==  '\\')  ) )
+			{
+				$result_path = $reference_path;
+			}
+			else
+			{
+				$p = '';
+				
+				$result_path = $path_buffer;
+
+				$path_buffer='';
+
+				$p = strstr( $base_path,  '/'  );
+
+				if( !$p )
+				{
+					$p = strstr( $base_path, '\\'  );
+				}
+
+				if( $p )
+				{
+					
+					$path_buffer.=$base_path;
+					
+					//while( s <= p )
+					//{
+					//	*d++ = *s++;
+					//}
+
+					//*d++ = 0;
+					
+				}
+
+				if( $reference_path != '' )
+				{
+					$path_buffer.=$reference_path;
+				}
+
+				{
+					//remove all occurrences of "./" 
+					//print($path_buffer);
+					$path_buffer=preg_replace("/\/\.\//","/",$path_buffer);
+					$path_buffer=preg_replace("/\/([^\/\.])*\/..$/","/",$path_buffer);
+					while(preg_match("/\.\./",$path_buffer)) {
+					  $path_buffer=preg_replace("/\/([^\/\.]*)\/..\//","/",$path_buffer);
+					}
+					$path_buffer=preg_replace("/\.$/","",$path_buffer);
+
+				}
+
+			}
+		}
+		
+		// This replaces the C pointer assignament
+		
+		$result_path = $path_buffer;
+		if( $result_scheme != '' )
+		{
+			$buffer=$result_scheme;
+			$buffer.=":";
+		}
+
+		if( $result_authority != '' )
+		{
+			$buffer.="//";
+			$buffer.=$result_authority;
+		}
+
+		if( $result_path != '' )
+		{
+			
+			$buffer.=$result_path;
+		}
+
+		if( $reference_query != '' )
+		{
+			$buffer.="?";
+			$buffer.=$reference_query;
+		}
+
+		if( $reference_fragment != '' )
+		{
+			$buffer.="#";
+			$buffer.=$reference_fragment;
+		}
+	}
+  }
+  
+  
+}
+
+}
+}
+?>

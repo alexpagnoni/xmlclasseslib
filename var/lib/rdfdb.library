@@ -1,0 +1,177 @@
+<?php
+if ( !defined ( 'RDFDB_LIBRARY' ) )
+{
+define( 'RDFDF_LIBRARY', TRUE );
+
+class RDFdb {
+  var $port;
+  var $host;
+  var $result=Array();
+  var $error='';
+  var $error_mode='verbose';
+  var $namespaces=Array();
+  var $errors=Array(
+   "0 " => "",
+   "-1" => "unknown file format",
+   "-2" => "general syntax error",
+   "-3" => "malformed literal",
+   "-4" => "general error",
+   "-5" => "database doesn not exist",
+   "-6" => "could not access data",
+   "-7" => "unauthorized acces",
+   "-8" => "uncontrained variable",
+   "-9" => "unknown file format",
+   "-10"=> "wrong file permissions"
+  );
+
+  function get_error() {
+    return $this->error;
+  }
+
+  function error_mode_silent() {
+    $this->error_mode='silent';
+  }
+
+  function error_mode_verbose() {
+    $this->error_mode='verbose';
+  }
+
+  function get_result() {
+    return $this->results;
+  }
+	
+  function RDFdb($host,$port) {
+    $this->port=$port;
+    $this->host=$host;	
+  }	
+
+  function create_database($name) {
+    $command="create database $name </>\n";
+    $ret=$this->_send_command($command);
+    return $ret;
+  }
+
+  function drop_database($name) {
+    $command="drop database $name </>\n";
+    $ret=$this->_send_command($command);
+    return $ret;
+  }
+
+  function load_file($database,$url) {
+    $command="load file $url into $database </>\n";
+    $ret=$this->_send_command($command);
+    return $ret;
+  }
+
+  function unload_file($database,$url) {
+    $command="unload file $url from $database </>\n";
+    $ret=$this->_send_command($command);
+    return $ret;
+  }
+
+  function execure_command($commands) {
+    $ret=$this->_send_command($command);
+    return $ret;
+  }
+
+  function insert_triplet($database,$arc,$source,$target) {
+    $command="insert into $database ($arc $source $target) </>\n";
+    $ret=$this->_send_command($command);
+    return $ret;
+  }
+
+  function delete_triplet($database,$arc,$source,$target) {
+    $command="delete from $database ($arc $source $target) </>\n";
+    $ret=$this->_send_command($command);
+    return $ret;
+  }
+
+  function insert_triplets($database,$triplets) {
+    foreach($triplets as $triplet) {
+      $arc=$triplet[0];
+      $source=$triplet[1];
+      $target=$triplet[2];
+      $command="insert into $database ($arc $source $target) </>\n";
+      $ret=$this->_send_command($command);
+    }
+    return $ret;
+  }
+
+  function delete_triplets($database,$triplets) {
+    foreach($triplets as $triplet) {
+      $arc=$triplet[0];
+      $source=$triplet[1];
+      $target=$triplet[2];
+      $command="delete from $database ($arc $source $target) </>\n";
+      $ret=$this->_send_command($command);
+    }
+    return $ret;
+  }
+    
+	
+  function query($query) {
+    $this->results=Array();
+    $command="$query </>\n";
+    $ret=$this->_send_command($command);
+    return $ret;
+  }	
+	
+  function _send_command($command) {
+    /* Create a TCP/IP socket. */
+    //    $socket = socket_create (AF_INET, SOCK_STREAM, 0);
+   $fp = fsockopen ($this->host, $this->port, $errno, $errstr, 30);
+   if(!$fp) {
+     $this->error=$errsts." ($errno)";
+     if($this->error_mode=='verbose') {
+       trigger_error($this->error,E_USER_WARNING);
+     }
+   } else {
+     $i=0;
+     fputs ($fp, $command);
+     while (!feof($fp)) {
+       $out=fgets ($fp,128);
+       $out=trim($out);
+       //$out=substr($out,0,strlen($out)-1);
+       if(!preg_match("/<\/>/",$out)) {
+         // Add result to the array
+         $outs=split("\t",$out);
+         $this->results[]=$outs;
+       } else {
+         // If error then create an error message
+         $code='';
+         for($i=0;$i<strlen($out);$i++) {
+           $chr=substr($out,$i,1);
+           if($chr=="-" || $chr=="1" || $chr=="0" || $chr=="2" || $chr=="3" || $chr=="4" || $chr=="5" || $chr=="6" || $chr=="7" || $chr=="8" || $chr=="9" ) {
+             $code.=$chr;
+           }
+         }
+         if(in_array($code,array_keys($this->errors))) {
+           $error_msg=$this->errors["$code"];
+           $this->error=$error_msg;
+           if($this->error_mode=='verbose') {
+             trigger_error($error_msg." in ".$command,E_USER_WARNING);
+           }
+           return false;
+         } else {
+           return true;
+         }
+       }
+     }
+     fclose ($fp);
+   }
+   
+  }
+	
+}	
+
+$test=new RDFdb("localhost",7077);
+$test->create_database("cosa");
+$test->insert_triplet("cosa","name","juan","juan");
+$test->insert_triplet("cosa","apellido","juan","perez");
+$test->query("select ?x,?y from cosa where (?x juan ?y)");
+$results=$test->get_result();
+print_r($results);
+$test->drop_database("cosa");
+
+}
+?>

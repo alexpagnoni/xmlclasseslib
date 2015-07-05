@@ -1,0 +1,539 @@
+<html>
+<head>
+<title>Schematron (class_schematron.php)</title>
+<link rel="stylesheet" href="main.css" type="text/css">
+</head>
+
+<body>
+
+<div align="center">
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#aaaaee" class="textblbl" align="center">Schematron (class_schematron.php)</td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">Description: This class implements the <a href="http://www.ascc.net/xml/resource/schematron/schematron.html">Schematron 1.5</a>
+  language for XML validation. Schematron scripts can be used directly from XML or pre-compiled into an XSLT stylesheet for later usage. XML files
+  to be validated can be read from disk files or php strings.
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+  <td valign="top" class="text" width="50%"><b>NEWS:</b>
+  <ul>
+    <li> 05-15-02 First version of this class released.
+  </ul>
+  </td>
+  <td valign="top" width="50%" class="text">
+     This class code as well as the documentation are hosted at <a href="http://www.sourceforge.net">SourceForge</a>
+     please visit our <a href="http://phpxmlclasses.sourceforge.net/">SourceForge page</a> for releases, documentation, bug-tracking, support
+     forums and mailing lists.
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td class="textbl" bgcolor="aaaaee" width="50%">Features</td>
+  <td class="textbl" bgcolor="aaaaee" width="50%">To-dos</td>
+</tr>
+</table>
+<table border="1" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td valign="top" bgcolor="eeeeff" class="text" width="50%">
+  <ul>
+    <li> XML files to be validated can be read from PHP strings or files
+    <li> Schematron scripts can be read from files or PHP strings
+    <li> Schematron scripts can be used compiled or uncompiled
+    <li> The class caches schematron compilations in order to prevent a schematron script
+    from being compiled twice.
+    <li> The Schematron 1.5 XSLT implementation is "inlined" in the class, no aditional
+    files are needed.
+  </ul>
+  </td>
+  <td valign="top" bgcolor="ddddff" class="text" width="50%">
+  <ul>
+    <li> 
+  </ul>
+  </td>
+  
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+<!--
+  <td valign="top" class="text" width="50%"><b>To-do/future releases:</b>
+  <ul>
+    <li>Class 
+    <li>Class 
+    <li>Class 
+  </ul>
+  </td> -->
+  <td valign="top" width="100%" class="text">
+     Contact: 
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+<!--
+  <td valign="top" class="text" width="50%"><b>To-do/future releases:</b>
+  <ul>
+    <li>Class 
+    <li>Class 
+    <li>Class 
+  </ul>
+  </td> -->
+  <td valign="top" width="100%" class="text">
+  Detailed description and usage:<br/>
+<b>Using the class:</b><br/><br/>
+<b>Initialization:</b><br/>
+  <pre>include_once("class_schematron.php");
+$s = new Schematron();</pre><br/>
+<b>Compiling a Schematron script (optional):</b><br/>
+  <pre>$s->compile_schematron_from_file("validation_sample1.xml");
+// You can get the compiled schematron as a string
+$compiled=$s->get_compiled("validation_sample1.xml");
+// Or you can save it as a file
+$s->save_compiled("validation_sample1.xml","validation1.xsl");</pre><br/>
+<b>Running an uncompiled schematron script from a file to validate an XML file:</b><br/>
+<pre>$ret=$s->schematron_validate_file_using_file("sample1.xml","validation_sample1.xml");</pre><br/>
+<b>Running an uncompiled schematron script from mem to validate an XML file:</b><br/>
+<pre>$ret=$s->schematron_validate_file_using_mem("sample1.xml",$schematron);</pre><br/>
+<b>Running an uncompiled schematron from a file to validate an XML document in memory:</b><br/>
+<pre>$ret=$s->schematron_validate_mem_using_file($xml,"validation_file.xml");</pre><br/>
+<b>Running an uncompiled schematron from mem to validate an XML document in memory:</b></br>
+<pre>$ret=$s->schematron_validate_mem_using_mem($xml,$schematron);</pre><br/>
+
+<b>Running an compiled schematron script from a file to validate an XML file:</b><br/>
+<pre>$ret=$s->schematron_validate_file_using_compiled_file("sample1.xml","validation_sample1.xml");</pre><br/>
+<b>Running an compiled schematron script from mem to validate an XML file:</b><br/>
+<pre>$ret=$s->schematron_validate_file_using_compiled_mem("sample1.xml",$schematron);</pre><br/>
+<b>Running an compiled schematron from a file to validate an XML document in memory:</b><br/>
+<pre>$ret=$s->schematron_validate_mem_using_compiled_file($xml,"validation_file.xml");</pre><br/>
+<b>Running an compiled schematron from mem to validate an XML document in memory:</b><br/>
+<pre>$ret=$s->schematron_validate_mem_using_compiled_mem($xml,$schematron);</pre><br/>
+
+  
+  </td>
+</tr>
+</table>
+<br/>
+
+
+<h3>Documentation</h3>
+</div>
+
+
+<h2>Classes</h2>
+<ul>
+  <li><a href="#class21">class_schematron</a></li>
+</ul>
+
+<a name="#class21"></a>
+<h3>class_schematron</h3>
+Extends: None<hr>
+Description: This class implements the Schematron 1.5 language allowing to validate XML files from PHP using Schematron.<hr>
+<br>
+
+<!-- METHOD SUMMARY -->
+<A NAME="pDomNode_method_summary"><!-- --></A>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TD>
+</TR>
+
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method1">Schematron</A></B>()</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Constructor</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method2">compile_schematron_from_file</A></B>(string $filename)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Compiles a schematron file to XSLT</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method3">compile_schematron_from_mem</A></B>(string $xml)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Compiles a Schematron script from a PHP string to an XSLT stylesheet</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method4">get_compiled</A></B>(string $xml_filename)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the compiled XSLT stylesheet for a Schematron script</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method5">save_compiled</A></B>(string $xml_filename, string $filename)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saves a previously compiled Schematron script to a file</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method6">validate_mem_using_mem</A></B>(string $xml_string, string $validation_string)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates an XML string using a Schematron script from a string.</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method7">validate_mem_using_file</A></B>(string $xml_string, string $validation_filename)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates an XML document in a string using a Schematron script from a file</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method8">validate_file_using_mem</A></B>(string $xml_filename, string $validation_string)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates an XML document in a file using a Schematron script from a PHP string</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method9">validate_file_using_file</A></B>(string $xml_filename, string $validation_filename)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates an XML document in a file using a Schematron script from a file</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method10">validate_mem_using_compiled_mem</A></B>(string $xml_string, string $validation_string)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates an XML document held in a PHP string using a compiled Schematron scrip</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method11">validate_mem_using_compiled_file</A></B>(string $xml_string, string $validation_filename)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates an XML document held in memory using a compiled Schematron script from</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method12">validate_file_using_compiled_mem</A></B>(string $xml_filename, string $validation_string)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates an XML documen in a file using a compiled Schematron script from a PHP</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class21method13">validate_file_using_compiled_file</A></B>(string $xml_filename, string $validation_filename)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates an XML document in a file using a compiled Schematron script in a file</TD>
+</TR>
+<!-- A ROW -->
+</TABLE>
+&nbsp;
+<P>
+<!-- METHOD SUMMARY -->
+
+
+<!-- ============ METHOD DETAIL ========== -->
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TD>
+</TR>
+</TABLE>
+
+<!--  method -->
+<A NAME="#class21method1"><!-- --></A>
+<H3>Schematron</H3>
+
+
+
+<PRE>
+void <B>Schematron</B>(string $xml_filename, string $validation_filename)</PRE>
+               
+<DL>
+<DD>This is the class constructor<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method2"><!-- --></A>
+<H3>compile_schematron_from_file</H3>
+
+
+
+<PRE>
+string <B>compile_schematron_from_file</B>(string $filename)</PRE>
+               
+<DL>
+<DD>Compiles a schematron 1.5 script generating an XSLT stylesheet.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $filename - Name of the file containing the Schematron script.<br><DT><B>Returns:</B><DD>The compiled Schematron script as an XSLT stylesheet<DT><B>Throws:</B><DD><CODE>XSLT errors if it cannot compile the Schematron file.</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method3"><!-- --></A>
+<H3>compile_schematron_from_mem</H3>
+
+
+
+<PRE>
+string <B>compile_schematron_from_mem</B>(string $xml)</PRE>
+               
+<DL>
+<DD>This compiles a schematron 1.5 script held in memory in a PHP string returning an XSLT stylesheet that can be used to validate XML documents following the rules defined in the script.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml - String containing the Schematron 1.5 script<br><DT><B>Returns:</B><DD>The XSLT stylesheet corresponding to the validation. (The compiled schematron script)<DT><B>Throws:</B><DD><CODE>Can raise an error if the Schematron cannot be compiled (XSLT errors)</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method4"><!-- --></A>
+<H3>get_compiled</H3>
+
+
+
+<PRE>
+string <B>get_compiled</B>(string $xml_filename)</PRE>
+               
+<DL>
+<DD>When a schematron script is used or compiled from a file the schematron class stores a compiled representation of the script as an XSLT stylesheet, you can obtain this stylesheet and use it in methods receiving a compiled Schematron script.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml_filename - This is the name of the file that originally held the Schematron script, note that the file doesn't need to exist now. The name should match the name used in previously invoked validation method or compilation method.<br><DT><B>Returns:</B><DD>False if the script was never used or compiled.
+or
+The Schematron compiled XSLT stylesheet corresponding to the filename provided as a parameter (the name of the file that originally held the Schematron script). <DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method5"><!-- --></A>
+<H3>save_compiled</H3>
+
+
+
+<PRE>
+boolean <B>save_compiled</B>(string $xml_filename, string $filename)</PRE>
+               
+<DL>
+<DD>This method is used to save a previously compiled or used Schematron script as an XSLT stylesheet to a file.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml_filename - This is the name that was used in a compilation or validation method using a Schematron script from a filename, one used or compiled the class stores a compiled representation as an XSLT stylesheet that can now be saved to a file to be used later as a compiled Schematron script.<br>$filename - This is the name of the file where the method will write the compiled (XSLT) schematron script.<br><DT><B>Returns:</B><DD>true if the compiled scripts exists in the class or false if not.<DT><B>Throws:</B><DD><CODE>Can throw an error if the file cannot be saved to disk.</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method6"><!-- --></A>
+<H3>validate_mem_using_mem</H3>
+
+
+
+<PRE>
+string <B>validate_mem_using_mem</B>(string $xml_string, string $validation_string)</PRE>
+               
+<DL>
+<DD>Validates an XML string using a Schematron script from a string.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml_string - string containing the XML document to be validated<br>$validation_string - String containing the Schematron script to be used<br><DT><B>Returns:</B><DD>The result of the validation.<DT><B>Throws:</B><DD><CODE>An XSLT error if the schematron script is invalid</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method7"><!-- --></A>
+<H3>validate_mem_using_file</H3>
+
+
+
+<PRE>
+string <B>validate_mem_using_file</B>(string $xml_string, string $validation_filename)</PRE>
+               
+<DL>
+<DD>Validates an XML document in a string using a Schematron script from a file. The compiled Schematron script will be cached and can be saved. <DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml_string - String containing the XML document to be validated<br>$validation_filename - Filename of the Schematron script to be used<br><DT><B>Returns:</B><DD>The result of the validation<DT><B>Throws:</B><DD><CODE>Can throw an XSLT error if the Schematron script is invalid.</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method8"><!-- --></A>
+<H3>validate_file_using_mem</H3>
+
+
+
+<PRE>
+string <B>validate_file_using_mem</B>(string $xml_filename, string $validation_string)</PRE>
+               
+<DL>
+<DD>Validates an XML document in a file using a Schematron script from a PHP string<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml_filename - Name of the file contaning the XML document to be validated<br>$validation_string - A PHP string containing the Schematron script to be used<br><DT><B>Returns:</B><DD>The result of the validation<DT><B>Throws:</B><DD><CODE>Can throw an error (XSLT) if the Schematron script is invalid.</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method9"><!-- --></A>
+<H3>validate_file_using_file</H3>
+
+
+
+<PRE>
+string <B>validate_file_using_file</B>(string $xml_filename, string $validation_filename)</PRE>
+               
+<DL>
+<DD>Validates an XML document in a file using a Schematron script from a file<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml_filename - Name of the file containing the XML document to be validated<br>$validation_filename - Name of the filename containing the Schematron script to be used<br><DT><B>Returns:</B><DD>The result of the validation<DT><B>Throws:</B><DD><CODE>Can throw an XSLT error if the Schematron script is invalid</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method10"><!-- --></A>
+<H3>validate_mem_using_compiled_mem</H3>
+
+
+
+<PRE>
+string <B>validate_mem_using_compiled_mem</B>(string $xml_string, string $validation_string)</PRE>
+               
+<DL>
+<DD>Validates an XML document held in a PHP string using a compiled Schematron script contained in a PHP string as an XSLT stylesheet.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml_string - A PHP string containing the XML document to be validated<br>$validation_string - A PHP string containing a compiled Schematron script (as XSLT)<br><DT><B>Returns:</B><DD>The result of the validation.<DT><B>Throws:</B><DD><CODE>Can throw an XSLT error</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method11"><!-- --></A>
+<H3>validate_mem_using_compiled_file</H3>
+
+
+
+<PRE>
+string <B>validate_mem_using_compiled_file</B>(string $xml_string, string $validation_filename)</PRE>
+               
+<DL>
+<DD>Validates an XML document held in memory using a compiled Schematron script from a file. The compiled script should be an XSLT stylesheet representing the Schematron transformation to be done.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml_string - A PHP string containing the XML document to be validated<br>$validation_filename - Name of the file containing the compiled version of the Schematron script<br><DT><B>Returns:</B><DD>The result of the validation.<DT><B>Throws:</B><DD><CODE>Can throw an XSLT error if the compiled script has errors</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method12"><!-- --></A>
+<H3>validate_file_using_compiled_mem</H3>
+
+
+
+<PRE>
+string <B>validate_file_using_compiled_mem</B>(string $xml_filename, string $validation_string)</PRE>
+               
+<DL>
+<DD>Validates an XML documen in a file using a compiled Schematron script from a PHP string<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml_filename - Name of the file containing the XML document to be validated<br>$validation_string - PHP String containing the compiled version of a Schematron script<br><DT><B>Returns:</B><DD>The result of the validation<DT><B>Throws:</B><DD><CODE>Can throw an XSLT error if the compiled Schematron script has errors</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class21method13"><!-- --></A>
+<H3>validate_file_using_compiled_file</H3>
+
+
+
+<PRE>
+string <B>validate_file_using_compiled_file</B>(string $xml_filename, string $validation_filename)</PRE>
+               
+<DL>
+<DD>Validates an XML document in a file using a compiled Schematron script in a file<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml_filename - Name of the file containing the XML document to be validated<br>$validation_filename - Name of the file containing the compiled representation of the Schematron script to be used<br><DT><B>Returns:</B><DD>The result of the validation<DT><B>Throws:</B><DD><CODE>Can throw an XSLT error if the compiled script has errors</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!-- ============ METHOD DETAIL ========== -->
+
+
+</body>
+</html>

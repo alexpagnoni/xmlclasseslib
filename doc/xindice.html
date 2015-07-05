@@ -1,0 +1,624 @@
+<html>
+<head>
+<title>Xindice (class_xindice.php)</title>
+<link rel="stylesheet" href="main.css" type="text/css">
+</head>
+
+<body>
+
+<div align="center">
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#aaaaee" class="textblbl" align="center">Xindice (class_xindice.php)</td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">Description: This is a class to access an Xindice 1.0 xml database,
+  the class uses the Xindice XML-RPC plugin so you need to check/install the Xindice XML-RPC plugin.
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+  <td valign="top" class="text" width="50%"><b>NEWS:</b>
+  <ul>
+    <li> 05-15-2002 Version 1.0 of this class is released.
+  </ul>
+  </td>
+  <td valign="top" width="50%" class="text">
+     This class code as well as documentation are hosted at <a href="http://www.sourceforge.net">SourceForge</a>
+     please visit our <a href="http://phpxmlclasses.sourceforge.net/">SourceForge page</a> for releases, documentation, bug-tracking, support
+     forums and mailing lists.
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td class="textbl" bgcolor="aaaaee" width="50%">Features</td>
+  <td class="textbl" bgcolor="aaaaee" width="50%">To-dos</td>
+</tr>
+</table>
+<table border="1" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td valign="top" bgcolor="eeeeff" class="text" width="50%">
+  <ul>
+    <li> Full Xindice XML-RPC API implemented.
+  </ul>
+  </td>
+  <td valign="top" bgcolor="ddddff" class="text" width="50%">
+  <ul>
+    <li> 
+  </ul>
+  </td>
+  
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+<!--
+  <td valign="top" class="text" width="50%"><b>To-do/future releases:</b>
+  <ul>
+    <li>Class 
+    <li>Class 
+    <li>Class 
+  </ul>
+  </td> -->
+  <td valign="top" width="100%" class="text">
+     Contact:
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+<!--
+  <td valign="top" class="text" width="50%"><b>To-do/future releases:</b>
+  <ul>
+    <li>Class 
+    <li>Class 
+    <li>Class 
+  </ul>
+  </td> -->
+  <td valign="top" width="100%" class="text">
+     Detailed description and usage:<br/>
+<pre>include_once("class_xindice.php");
+// Create the Xindice access object
+$xi=new Xindice("$server",$port); //Default port is 4080
+if(!$xi) {
+  die("Cannot create Xindice object, check servername and port<br />");
+}
+$xi->setXmlRpcDebug(0);
+</pre><br/>
+Once the class is instantiated use the object to call Xindice's RPC methods, check the following documentation
+for a complete listing of methods that can be called and what they do. The test.php script in this distribution
+checks the correct working of the class and the Xindice RPC Api.
+  </td>
+</tr>
+</table>
+<br/>
+
+
+<h3>Documentation</h3>
+</div>
+
+
+<h2>Classes</h2>
+<ul>
+  <li><a href="#class22">class_xindice</a></li>
+</ul>
+
+<a name="#class22"></a>
+<h3>class_xindice</h3>
+Extends: None<hr>
+Description: This class implements the Xindice 1.0 XML-RPC API as class methods allowing PHP scripts to use an Xindice database server<hr>
+<br>
+
+<!-- METHOD SUMMARY -->
+<A NAME="pDomNode_method_summary"><!-- --></A>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TD>
+</TR>
+
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method1">Xindice</A></B>(string $server_uri, int $server_port)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Constructor</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method2">getError</A></B>(string $server_uri, int $server_port)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the error message when a method fails</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method3">setXmlRpcDebug</A></B>(boolean $debug)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the debug method of the XML-RPC library</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method6">createCollection</A></B>(string $base, string $collectionName)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a collection from a base collection</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;array</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method4">listCollections</A></B>(string $collection)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lists collections under a parent collection</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method5">getDocumentCount</A></B>(string $collectionPath)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number of documents in a collection</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method7">dropCollection</A></B>(string $collectionPath)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Drops a collection</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method8">insertDocument</A></B>(string $collection, string $id, string $content)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inserts a new document in a collection</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method9">setDocument</A></B>(string $collection, string $id, string $content)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updates/sets a document</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method10">getDocument</A></B>(string $collection, string $id)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Retrieves a document from the database</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;array</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method11">listDocuments</A></B>(string $collection)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lists the documents under a collection</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method12">removeDocument</A></B>(string $collection, string $id)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes a document from a collection</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method13">createIndexer</A></B>(string $collection, string $indexName, string $pattern)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates an index</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method14">dropIndexer</A></B>(string $collection, string $indexName)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Drops an index</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;Array</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method15">listIndexers</A></B>(string $collection)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List indexes created on a collection</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method16">queryDocument</A></B>(string $collection, string $type, string $query, string $id)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Queries a document</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class22method17">queryCollection</A></B>(string $collection, string $type, string $query)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Queries a collection</TD>
+</TR>
+<!-- A ROW -->
+</TABLE>
+&nbsp;
+<P>
+<!-- METHOD SUMMARY -->
+
+
+<!-- ============ METHOD DETAIL ========== -->
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TD>
+</TR>
+</TABLE>
+
+<!--  method -->
+<A NAME="#class22method1"><!-- --></A>
+<H3>Xindice</H3>
+
+
+
+<PRE>
+void <B>Xindice</B>(string $server_uri, int $server_port)</PRE>
+               
+<DL>
+<DD>Constructor, must receive the URI of the Xindice server an optionally the port that the server uses (default=4080)<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $server_uri - URI of the Xindice server, use "localhost" if local.<br>$server_port - Optional parameter indicating the Xindice server's port, defaulted to 4080 if not present.<br><DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method2"><!-- --></A>
+<H3>getError</H3>
+
+
+
+<PRE>
+string <B>getError</B>(string $server_uri, int $server_port)</PRE>
+               
+<DL>
+<DD>If a method fails returning false you can check the value returned from this method for a description of an error.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>Error message<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method3"><!-- --></A>
+<H3>setXmlRpcDebug</H3>
+
+
+
+<PRE>
+void <B>setXmlRpcDebug</B>(boolean $debug)</PRE>
+               
+<DL>
+<DD>This class uses an XML-RPC library, if something goes wrong you can turn the XML-RPC debug of the library on using this method.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $debug - Set it ti true to turn debug mode on or false tu turn it off<br><DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method6"><!-- --></A>
+<H3>createCollection</H3>
+
+
+
+<PRE>
+boolean <B>createCollection</B>(string $base, string $collectionName)</PRE>
+               
+<DL>
+<DD>Creates a collection from a base collection<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $base - Name of the base collection where the new collection will be created<br>$collectionName - Name of the new creation to be created<br><DT><B>Returns:</B><DD><DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method4"><!-- --></A>
+<H3>listCollections</H3>
+
+
+
+<PRE>
+array <B>listCollections</B>(string $collection)</PRE>
+               
+<DL>
+<DD>This method returns an array of strings with the names of collections under the parent collection passed as argument only child collections are returned not all the descendant collections<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Name of the parent collection to be used<br><DT><B>Returns:</B><DD>An array with the name of the collections under the collection passed as argument<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method5"><!-- --></A>
+<H3>getDocumentCount</H3>
+
+
+
+<PRE>
+int <B>getDocumentCount</B>(string $collectionPath)</PRE>
+               
+<DL>
+<DD>Returns the number of documents present in the collection passed as argument<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collectionPath - Collection name<br><DT><B>Returns:</B><DD>The number of documents held by the collection<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method7"><!-- --></A>
+<H3>dropCollection</H3>
+
+
+
+<PRE>
+boolean <B>dropCollection</B>(string $collectionPath)</PRE>
+               
+<DL>
+<DD>Drops a collection all documents and subcollections under the collection are removed as well<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collectionPath - Path to the collection to be removed<br><DT><B>Returns:</B><DD><DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method8"><!-- --></A>
+<H3>insertDocument</H3>
+
+
+
+<PRE>
+boolean <B>insertDocument</B>(string $collection, string $id, string $content)</PRE>
+               
+<DL>
+<DD>Inserts a new document in a collection<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Name of the collection where the document will be inserted<br>$id - A string identifying the document inside the collection<br>$content - The XML document to be inserted<br><DT><B>Returns:</B><DD><DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method9"><!-- --></A>
+<H3>setDocument</H3>
+
+
+
+<PRE>
+boolean <B>setDocument</B>(string $collection, string $id, string $content)</PRE>
+               
+<DL>
+<DD>Updates/sets a document<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Name of the collection where the document resides<br>$id - Id of the document to be updated<br>$content - New XML content to be set<br><DT><B>Returns:</B><DD><DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method10"><!-- --></A>
+<H3>getDocument</H3>
+
+
+
+<PRE>
+string <B>getDocument</B>(string $collection, string $id)</PRE>
+               
+<DL>
+<DD>Retrieves a document from the database<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Collection name<br>$id - Document id<br><DT><B>Returns:</B><DD>The XML document or false if it not found<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method11"><!-- --></A>
+<H3>listDocuments</H3>
+
+
+
+<PRE>
+array <B>listDocuments</B>(string $collection)</PRE>
+               
+<DL>
+<DD>Returns an array of document names blonging to the given collection<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Name of the collection<br><DT><B>Returns:</B><DD>An array of strings containing the documents' names<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method12"><!-- --></A>
+<H3>removeDocument</H3>
+
+
+
+<PRE>
+boolean <B>removeDocument</B>(string $collection, string $id)</PRE>
+               
+<DL>
+<DD>Removes a document from a collection<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Name of the collection<br>$id - Id of the document to be removed<br><DT><B>Returns:</B><DD><DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method13"><!-- --></A>
+<H3>createIndexer</H3>
+
+
+
+<PRE>
+boolean <B>createIndexer</B>(string $collection, string $indexName, string $pattern)</PRE>
+               
+<DL>
+<DD>This method creates an index on a collection given a pattern<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Name of the collection where the index will be created<br>$indexName - Name of the index that will be created<br>$pattern - Pattern for the index<br><DT><B>Returns:</B><DD><DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method14"><!-- --></A>
+<H3>dropIndexer</H3>
+
+
+
+<PRE>
+boolean <B>dropIndexer</B>(string $collection, string $indexName)</PRE>
+               
+<DL>
+<DD>Drops an index created for a collection<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Name of the collection<br>$indexName - Name of the index to be dropped from the collection<br><DT><B>Returns:</B><DD><DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method15"><!-- --></A>
+<H3>listIndexers</H3>
+
+
+
+<PRE>
+Array <B>listIndexers</B>(string $collection)</PRE>
+               
+<DL>
+<DD>List indexes created on a collection<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Name of the collection<br><DT><B>Returns:</B><DD>An array of indexNames existing for the collection<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method16"><!-- --></A>
+<H3>queryDocument</H3>
+
+
+
+<PRE>
+string <B>queryDocument</B>(string $collection, string $type, string $query, string $id)</PRE>
+               
+<DL>
+<DD>This method is used to execute a query on a document from some collection, it can execute Xpath or XUpdate queries.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Name of the collection where the document belongs<br>$type - Name of the type of query (XPath or XUpdate)<br>$query - Query to be executed<br>$id - Id of the document to be queried<br><DT><B>Returns:</B><DD>The result of the query<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class22method17"><!-- --></A>
+<H3>queryCollection</H3>
+
+
+
+<PRE>
+string <B>queryCollection</B>(string $collection, string $type, string $query)</PRE>
+               
+<DL>
+<DD>This method is used to query all the documents in a collection<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $collection - Name of the collection<br>$type - Type of query (XPath or XUpdate)<br>$query - Query to be executed on the collection<br><DT><B>Returns:</B><DD>Query result<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!-- ============ METHOD DETAIL ========== -->
+
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<html>
+<head>
+<title>RDDL Parser (class_rddl_parser.php)</title>
+<link rel="stylesheet" href="main.css" type="text/css">
+</head>
+
+<body>
+<div align="center">
+<table border="0" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td bgcolor="#aaaaee" class="textblbl" align="center">RDDL Parser (class_rddl_parser.php)</td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">Description: This class can be used to parse <a href="http://www.rddl.org">RDDL</a> documents. An
+  RDDL document is an XHTML document with special &lt;resource&gt; elements. This class parses the resources described in
+  the RDDL and provides a method to return a PHP array containing the information about the RDDL resources. After parsing
+  the document and retrieving the resources you can do whatever you want with them. RDDL documents can be parsed from URLs or files.
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+  <td valign="top" class="text" width="50%"><b>NEWS:</b>
+  <ul>
+    <li> 06-20-2002 First version of this class released.
+  </ul>
+  </td>
+  <td valign="top" width="50%" class="text">
+     This class code as well as documentation are hosted at <a href="http://www.sourceforge.net">SourceForge</a>
+     please visit our <a href="http://www.sourceforge.net/projects/phpxmlclasses/">SourceForge page</a> for releases, documentation, bug-tracking, support
+     forums and mailing lists.
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td class="textbl" bgcolor="aaaaee" width="50%">Features</td>
+  <td class="textbl" bgcolor="aaaaee" width="50%">To-dos</td>
+</tr>
+</table>
+<table border="1" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td valign="top" bgcolor="eeeeff" class="text" width="50%">
+  <ul>
+    <li>All the RDDL resource attributes can be retrieved.
+  </ul>
+  </td>
+  <td valign="top" bgcolor="ddddff" class="text" width="50%">
+  <ul>
+    <li>If you want to add some feature to this class let me know it.
+  </ul>
+  </td>
+  
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+<!--
+  <td valign="top" class="text" width="50%"><b>To-do/future releases:</b>
+  <ul>
+    <li>Class 
+    <li>Class 
+    <li>Class 
+  </ul>
+  </td> -->
+  <td valign="top" width="100%" class="text">
+     Contact: Luis Argerich (<a href="mailto:lrargerich@yahoo.com">lrargerich@yahoo.com</a>)
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+<!--
+  <td valign="top" class="text" width="50%"><b>To-do/future releases:</b>
+  <ul>
+    <li>Class 
+    <li>Class 
+    <li>Class 
+  </ul>
+  </td> -->
+  <td valign="top" width="100%" class="text">
+    <b>Detailed description and usage:</b>
+<br/><br/>
+See the rddldump.php example for a good description about how to use this class.
+<br/><br/>
+<b>An example:</b>
+<pre>
+include_once("class_rddl.php");
+$rddl=new RDDL_parser();
+$rddl->rddl_parse("http://www.rddl.org/");
+$resources=$rddl->get_resources();
+</pre>
+<br/><br/>
+  </td>
+</tr>
+</table>
+<br/>
+</div>
+<h3>Documentation</h3>
+<h2>Classes</h2>
+<ul>
+  <li><a href="#class30">RDDL_parser</a></li>
+</ul>
+
+<a name="#class30"></a>
+<h3>RDDL_parser</h3>
+Extends: None<hr>
+Description: This class can be used to parse a RDDL document from a file or a URL and then it can be asked to return an array containing information about all the RDDL resources found on the file. The information can be used as you want.<hr>
+<br>
+
+<!-- METHOD SUMMARY -->
+<A NAME="pDomNode_method_summary"><!-- --></A>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TD>
+</TR>
+
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class30method1">get_error</A></B>()</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the error message if there was a problem parsing the RDDL document</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;Boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class30method2">rddl_parse</A></B>(string $rddl)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Parses an RDDL document</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;Array</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class30method3">get_resources</A></B>(string $rddl)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns resources found after parsing an RDDL document</TD>
+</TR>
+<!-- A ROW -->
+</TABLE>
+&nbsp;
+<P>
+<!-- METHOD SUMMARY -->
+
+
+<!-- ============ METHOD DETAIL ========== -->
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TD>
+</TR>
+</TABLE>
+
+
+<!--  method -->
+<A NAME="#class30method1"><!-- --></A>
+<H3>get_error</H3>
+
+
+
+<PRE>
+string <B>get_error</B>()</PRE>
+               
+<DL>
+<DD>This method returns an error message when rddl_parse returns false.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>The last error message.<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class30method2"><!-- --></A>
+<H3>rddl_parse</H3>
+
+
+
+<PRE>
+Boolean <B>rddl_parse</B>(string $rddl)</PRE>
+               
+<DL>
+<DD>This method is called to parse an RDDL document from a URI or file.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $rddl - URL or filename of the RDDL document to be parsed<br><DT><B>Returns:</B><DD>True if the document was parsed succesfully, false if there was an error.<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class30method3"><!-- --></A>
+<H3>get_resources</H3>
+
+
+
+<PRE>
+Array <B>get_resources</B>(string $rddl)</PRE>
+               
+<DL>
+<DD>This method returns an array containing the RDDL resources found in the parsed RDDL document.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>An array of asociative arrays, each member of the array is a resource found in the RDDL document. Each member is an asociative array describing the resource, typical keys are: role, href, arcrole, type, title, id<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!-- ============ METHOD DETAIL ========== -->
+
+</body>
+</html>

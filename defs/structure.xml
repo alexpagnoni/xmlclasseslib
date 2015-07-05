@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<structure>
+
+	<library	name="rddlparser"	file="rddlparser.library"/>
+        <library	name="rdfdb"	file="rdfdb.library"/>
+	<library	name="rdfparser"	file="rdfparser.library"/>
+        <library	name="rssparser"	file="rssparser.library"/>
+        <library	name="schematron"	file="schematron.library"/>
+        <library	name="xindice"	file="xindice.library"/>
+        <library	name="xquerylite"	file="xquerylite.library"/>
+        <library	name="xsltparser"	file="xsltparser.library"/>
+
+</structure>

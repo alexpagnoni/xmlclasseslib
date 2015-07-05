@@ -1,0 +1,1515 @@
+<html>
+<head>
+  <title>Xquery Lite</title>
+  <link rel="stylesheet" href="main.css" type="text/css">
+</head>
+<body>
+<div align="center">
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#bbbbff" class="text">
+  <h2>Xquery Lite 1.0</h2>
+  <i>A query language for XML based on Xquery 1.0</i><br/><br/>
+  Other versions:<a href="http://phpxmlclasses.sourceforge.net/xquery_lite_1.0.pdf">(pdf version of this document)</a><br/>
+  (c) 2002 by <a href="mailto:lrargerich@yahoo.com">Luis Argerich</a>
+  </td>
+</tr>
+</table>  
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  Index
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <dt>
+  <dd><a href="#introduction">Introduction</a>
+  <dd><a href="#characteristics">Characteristics</a>
+  <dd><a href="#version11">Future versions</a>
+  <dd><a href="#queries">Xquery Lite 1.0 Queries</a>
+  <dd><a href="#expressions">Xquery Lite expressions</a>
+  <dd><a href="#flwr">FLWR Lite expressions</a>
+  <dd><dd><a href="#for">for statementes</a>
+  <dd><dd><dd><a href="#forvariants">for variations</a>
+  <dd><dd><dd><a href="#join">joining documents</a>
+  <dd><dd><dd><a href="#compact">compact for syntax</a>
+  <dd><dd><a href="#return">return statements</a>
+  <dd><dd><a href="#where">where statements</a>
+  <dd><dd><a href="#let">let statements</a>
+  <dd><a href="#examples">Examples</a>
+  <dd><dd><a href="#usecase1">Use Case 1</a>
+  <dd><dd><a href="#usecase2">Use Case 2</a>
+  <dd><dd><a href="#usecase3">Use Case 3</a>
+  <dd><dd><a href="#usecase4">Use Case 4</a>
+  <dd><dd><a href="#usecase5">Use Case 5</a>
+  <dd><dd><a href="#usecase6">Use Case 6</a>
+  <dd><dd><a href="#usecase9">Use Case 9</a>
+  <dd><dd><a href="#usecase11">Use Case 11</a>
+  <dd><a href="#implementations">Implementations</a>
+  </dt>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="introduction"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  Introduction
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Status: This document describes Xquery-Lite 1.0 new features matching closer the Xquery 1.0 spec will be added
+to future versions of this language. New versions will always be compatible with older versions. This language
+may be extended but won't be changed.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>Xquery Lite is a subset of the W3C's <a href="http://www.w3.org/TR/xquery/">Xquery 1.0</a> language. Xquery
+is a powerful language for querying XML documents. We simplified the Xquery spec obtaining a sub-set that we
+called Xquery Lite that is easy to implement and allows many very interesting features for XML-Querying.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="characteristics"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  Characteristics
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Xquery is based on Xpath so Xquery Lite is also based on Xpath you can think about Xquery Lite as a super-set
+of Xpath adding many features useful for querying XML documents, the most important feature is that queries are
+not only restricted to one XML document, you can "join" many documents and output the result comparing elements
+in two different documents if you want.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="version11"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  Xquery Lite 1.1 preview
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>In a future 1.1 version of the language we plan to add the following features:</p>
+  <ul>
+  <li>IF statements
+  <li>A sequence-equal function that compares subtrees regardless of the order in which elements appear
+  <li>A "some" function allowing constructs in the form where some($b/title) = "foo" thus comparing some
+element in a node set agains another element or value.
+  <li>Sorting
+  <li>Min, Max and Average functions  
+</ul>
+</td>
+</tr>
+</table>
+<br/>
+<a name="queries"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  An Xquery Lite 1.0 query
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  An Xquery Lite query is composed by decorating text and Xquery Lite expressions, expressions must be enclosed
+between {brackets}, everything outside brackets is directly outputted to the result
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  Example of a Query skeleton:
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+  <pre>
+&lt;result&gt;
+{
+ XQUERY_EXPRESSIONS
+}
+&lt;/result&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>Note that the decorating text doesn't need to be XML it can be plain text or whatever you want for the result
+of the query.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="expressions"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  Xquery Lite expressions
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>Xquery Lite expressions are based on Xquery FLWR (For-Let-Where-Return) expressions. A FLWR expression is in the
+form:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+  <pre>FOR_STATEMENT+
+LET_STATEMENT*
+WHERE_STATEMENT?
+RETURN_STATEMENT</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>So we must have at least a FOR statement, followed by 0..n LET statements, then an optional where statement
+and only one mandatory return statement. As we can see later a return statement can include other queries thus
+allowing the use of nested-queries or sub-queries. You don't need to sepparate FOR-LET-WHERE-RETURN by line
+breaks but you do must leave at least one empty whitespace (tab,blank or newline) character between statements.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="flwr"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  FLWR-Lite tutorial
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>We are going to explain now the meaning of a FLWR-lite expression (An Xquery-Lite expression).</p>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="for"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  FOR statementss
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>A FOR statement executes an <a href="http://www.w3.org/TR/xpath">Xpath</a> expression over an XML document
+returning a nodeset, then remaining sentences in the expression will be evaluated once for each node in the nodeset.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>Example:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+  <pre>
+{
+  for $a in document("foo1.xml")//name
+  return {$a}
+}</pre>
+</td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>The above expression will get all the "name" elements from the XML document contained in the file "foo1.xml" and
+for each "name" element the return expression will be executed returning the "name" element. The result will be
+something like:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+  <pre>
+&lt;name&gt;foo&lt;/name&gt;&lt;name&gt;John&lt;/name&gt;...&lt;name&gt;Peter&lt;/name&gt;</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>As you can see each node will be "binded" to the $a variable ($a is not a PHP variable, is a query variable) and
+we may use $a in statements below the for statement to consult the value of the current node</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>So we know what a FOR statement does, let's see how many ways do we have for a fot statement</p>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="forvariants"/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+  <pre>for $a in document("foo1.xml")/xpath_expression    to query a document from a file
+for $a in xmlmem($xml)/xpath_expression            to query a document from a php string
+for $a in $x/xpath_expression                      to query a document from a Xquery Lite variable</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>So we can execute Xpath expressions on files, strings or a query variable binded by a previous for or let
+statement</p>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="join"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>When two or more fors are used instructions below the "fors" will be executed for each combination of
+elements generated by the nodesets returned by each for</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Example:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;result&gt;
+{
+  for $a in document("foo1.xml")//name
+  for $b in document("people.xml")//item
+  return &lt;combination>
+         {$a}
+         {$b}
+         &lt;/combination&gt;
+}       
+&lt;/result&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>This will generate something like:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;result&gt;
+  &lt;combination&gt;
+    &lt;name>foo&lt;/name&gt;
+    &lt;item>i1&lt;/item&gt;
+  &lt;/combination&gt;
+  &lt;combination&gt;
+    &lt;name>foo&lt;/name&gt;
+    &lt;item>i2&lt;/item&gt;
+  &lt;/combination&gt;
+  ...
+&lt;/result&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>So two or more for statements produce a "join" of XML documents.</p>
+<a name="compact"/>
+<p>Two or more for statements can be written in a compact syntax using comma sepparated for expressions:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>for $a in document("foo1.xml")//item
+for $t in $a/title
+for $n in $a/name</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Can be written as:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>for $a in document("foo1.xml")//item, $t in $a/title, $n in $a/name
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="return"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  Return statement
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>A return statement indicates what the Query must return, returns are executed once for each combination
+of nodes produced by for statements, a return statement has the following syntax.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>
+return Xquery-Lite-Query
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>So what follows a return statement can be text decorations and Xquery expressions enclosed between brackets,
+typically text decoration is used to give some format to the answer and Xquery expressions are used to take
+values from query variables and output them.</p>
+<p>Example:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>{
+ for $a in document("foo1.xml")//name
+ return &lt;a_name&gt;
+          {$a/text()}
+        &lt;/a_name&gt;
+}
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p>Note that the for statements produce name "elements" so if we want to return the text we use a mini-xpath
+expression using each "name" element as the XML source inside the return statement. We may have several 
+Xquery expressions in a return expression enclosed by brackets and each of them can be a full FLWR expression
+so we may have sub-queries using query variables as XML sources and producing some result.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="where"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  Where statement
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>A where statement is used to "filter" results that will be passed to the return statement, it is the "key"
+construction for a query since it allows us to return what we want and not everything. A where statement must
+return true or false, for example:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>{
+ for $a in document("foo1.xml")//person
+ where $a/age > 10
+ return <a_name>
+          {$a/name/text()}
+        </a_name>
+}
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>In this example we return all the names of persons with age > 10 note that an age "element" when compared
+to a string or an integer is automatically converted to a string. </p>
+<p>In a where expression we may have:</p>
+<ul>
+<li>Parenthesis can be used to override precedence and are recommended.
+<li>Expressions can be combined by "and" and "or" expressions ex: where ($a/name="foo") and ($a/age>10)&lt;60
+<li>&lt;,&gt;,&lt;=,&gt;=,=,<> can be used to compare elements against values or elements agains elements
+<li>If an element with sub-elements is compared to another elements a recursive-deep match is done, if all the
+subelements are present and equal then the elements are considered equal.
+<li>+,-,*,/ can be used to perform arithmetic operations between elements containing numbers
+<li>The count() function can be used to count the number of node in a expression ex: where count($a/name)=1 if we
+want elements with only one name subelement
+</ul>
+<p>So some complex where expressions can be used to perform complex queries.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="let"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+Let statements
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>A let statement can bind a value to a query variable, for example:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>let $name := $a/name/text()
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>This expression binds the result of the $a/name/text() xpath expression to the query's $name variable.</p>
+<p>Let expressions are generally optional and used only as auxiliary variables that will later be used in
+a where or return expression</p>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="examples"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+Examples of Xquery-Lite queries
+</td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Now we are going to show how some W3C Xquery Use-Cases can be solved using Xquery Lite</p>
+<p>In the examples we will work with the "bib.xml" document which has information about books:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;bib&gt;
+    &lt;book year="1994"&gt;
+        &lt;title&gt;TCP/IP Illustrated&lt;/title&gt;
+        &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+        &lt;publisher&gt;Addison-Wesley&lt;/publisher&gt;
+        &lt;price&gt; 65.95&lt;/price&gt;
+    &lt;/book&gt;
+ 
+    &lt;book year="1992"&gt;
+        &lt;title&gt;Advanced XML Programming in the Unix environment&lt;/title&gt;
+        &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+        &lt;publisher&gt;Addison-Wesley&lt;/publisher&gt;
+        &lt;price&gt;65.95&lt;/price&gt;
+    &lt;/book&gt;
+ 
+    &lt;book year="2000"&gt;
+        &lt;title&gt;Data on the Web&lt;/title&gt;
+        &lt;author&gt;&lt;last&gt;Abiteboul&lt;/last&gt;&lt;first&gt;Serge&lt;/first&gt;&lt;/author&gt;
+        &lt;author&gt;&lt;last&gt;Buneman&lt;/last&gt;&lt;first&gt;Peter&lt;/first&gt;&lt;/author&gt;
+        &lt;author&gt;&lt;last&gt;Suciu&lt;/last&gt;&lt;first&gt;Dan&lt;/first&gt;&lt;/author&gt;
+        &lt;publisher&gt;Morgan Kaufmann Publishers&lt;/publisher&gt;
+        &lt;price&gt; 39.95&lt;/price&gt;
+    &lt;/book&gt;
+ 
+    &lt;book year="1999"&gt;
+        &lt;title&gt;The Economics of Technology and Content for Digital TV&lt;/title&gt;
+        &lt;editor&gt;
+               &lt;last&gt;Gerbarg&lt;/last&gt;&lt;first&gt;Darcy&lt;/first&gt;
+                &lt;affiliation&gt;CITI&lt;/affiliation&gt;
+        &lt;/editor&gt;
+            &lt;publisher&gt;Kluwer Academic Publishers&lt;/publisher&gt;
+        &lt;price&gt;129.95&lt;/price&gt;
+    &lt;/book&gt;
+ 
+&lt;/bib&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>And the reviews.xml document listing book reviews:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>
+&lt;reviews&gt;
+    &lt;entry&gt;
+        &lt;title&gt;Data on the Web&lt;/title&gt;
+        &lt;price&gt;34.95&lt;/price&gt;
+        &lt;review&gt;
+               A very good discussion of semi-structured database
+               systems and XML.
+        &lt;/review&gt;
+    &lt;/entry&gt;
+    &lt;entry&gt;
+        &lt;title&gt;Advanced Programming in the Unix environment&lt;/title&gt;
+        &lt;price&gt;65.95&lt;/price&gt;
+        &lt;review&gt;
+               A clear and detailed discussion of UNIX programming.
+        &lt;/review&gt;
+    &lt;/entry&gt;
+    &lt;entry&gt;
+        &lt;title&gt;TCP/IP Illustrated&lt;/title&gt;
+        &lt;price&gt;65.95&lt;/price&gt;
+        &lt;review&gt;
+               One of the best books on TCP/IP.
+        &lt;/review&gt;
+    &lt;/entry&gt;
+&lt;/reviews&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="usecase1"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+Use-Case 1
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p><i>Query: List books published by Addison-Wesley after 1991, including their year and title.</i></p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Solution:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;bib&gt;
+ {
+  for $b in document("c:\apache\htdocs\phpxmlclasses\bib.xml")/bib/book
+  where $b/publisher = "Addison-Wesley" and $b/@year &gt; 1991
+  return
+    &lt;book year="{ $b/@year }"&gt;
+     { $b/title }
+    &lt;/book&gt;
+ }
+&lt;/bib&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Comment: we retrieve all book elements using a for statement and filter by the name of the published
+and the year attribute (note the element/@name notation). The return just builds an XML document listing
+the year as an attribute and the title of the books that match the criteria.</p>
+<p>The result will be something like this:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;bib&gt;
+&lt;book year="1994"&gt;
+&lt;title&gt;TCP/IP Illustrated&lt;/title&gt;
+&lt;/book&gt;
+&lt;book year="1992"&gt;
+&lt;title&gt;Advanced XML Programming in the Unix environment&lt;/title&gt;
+&lt;/book&gt;
+&lt;/bib&gt; 
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="usecase2"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  Use-Case 2
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p><i>Query: Create a flat list of all the title-author pairs, with each pair enclosed in a "result" element.</i></p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;results&gt;
+  {
+    for $b in document("c:\apache\htdocs\phpxmlclasses\bib.xml")/bib/book,$t in $b/title,$a in $b/author
+    return
+        &lt;result&gt;
+            { $t }
+            { $a }
+        &lt;/result&gt;
+  }
+&lt;/results&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Comment: We retrieve all the book elements then for each book we retrieve all the titles (a book may
+have several titles) and all the book's authors and generate a result element with a title sub-element
+and author sub-element.</p>
+<p>Expected result:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;results&gt;
+  &lt;result&gt;
+    &lt;title&gt;TCP/IP Illustrated&lt;/title&gt;
+    &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+  &lt;/result&gt;
+  &lt;result&gt;
+    &lt;title&gt;Advanced XML Programming in the Unix environment&lt;/title&gt;
+    &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+  &lt;/result&gt;
+  &lt;result&gt;
+    &lt;title&gt;Data on the Web&lt;/title&gt;
+    &lt;author&gt;&lt;last&gt;Abiteboul&lt;/last&gt;&lt;first&gt;Serge&lt;/first&gt;&lt;/author&gt;
+  &lt;/result&gt;
+  &lt;result&gt;
+    &lt;title&gt;Data on the Web&lt;/title&gt;
+    &lt;author&gt;&lt;last&gt;Buneman&lt;/last&gt;&lt;first&gt;Peter&lt;/first&gt;&lt;/author&gt;
+  &lt;/result&gt;
+  &lt;result&gt;
+    &lt;title&gt;Data on the Web&lt;/title&gt;
+    &lt;author&gt;&lt;last&gt;Suciu&lt;/last&gt;&lt;first&gt;Dan&lt;/first&gt;&lt;/author&gt;
+  &lt;/result&gt;
+&lt;/results&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="usecase3"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+  Use-Case 3
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <p><i>Query: For each book in the bibliography, list the title and authors, grouped inside a "result" element.</i></p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Solution:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;results&gt;
+{
+    for $b in document("c:\apache\htdocs\phpxmlclasses\bib.xml")/bib/book
+    return
+        &lt;result&gt;
+            { $b/title }
+            { $b/author  }
+        &lt;/result&gt;
+}
+&lt;/results&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Comment: In this simple query we just return the title and author for each book note that since a book
+may have many authors we may have several author elements for each result.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Expected result:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;results&gt;
+ &lt;result&gt;
+   &lt;title&gt;TCP/IP Illustrated&lt;/title&gt;
+   &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+ &lt;/result&gt;
+ &lt;result&gt;
+   &lt;title&gt;Advanced XML Programming in the Unix environment&lt;/title&gt;
+   &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+ &lt;/result&gt;
+ &lt;result&gt;
+   &lt;title&gt;Data on the Web&lt;/title&gt;
+   &lt;author&gt;&lt;last&gt;Abiteboul&lt;/last&gt;&lt;first&gt;Serge&lt;/first&gt;&lt;/author&gt;
+   &lt;author&gt;&lt;last&gt;Buneman&lt;/last&gt;&lt;first&gt;Peter&lt;/first&gt;&lt;/author&gt;
+   &lt;author&gt;&lt;last&gt;Suciu&lt;/last&gt;&lt;first&gt;Dan&lt;/first&gt;&lt;/author&gt;
+ &lt;/result&gt;
+ &lt;result&gt;
+ &lt;title&gt;The Economics of Technology and Content for Digital TV&lt;/title&gt;
+ &lt;/result&gt;
+&lt;/results&gt; 
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="usecase4"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+Use-Case 4
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p><i>For each author in the bibliography, list the author's name and the titles of all books by that author, grouped inside a "result" element.</i></p>  
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Solution:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;results&gt;
+  {
+    for $a in distinct-values(document("c:\apache\htdocs\phpxmlclasses\bib.xml")//author)
+    return
+        &lt;result&gt;
+            {$a }
+            {
+                for $b in document("c:\apache\htdocs\phpxmlclasses\bib.xml")/bib/book
+                for $a2 in $b/author
+                where $a2=$a
+                return {$b/title}
+            }
+        &lt;/result&gt;
+  }
+&lt;/results&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Comment: We retrieve all the authors using a for statement then for each author we return something so
+we use a return statement with sub-queries. First we output the author element and then for each book in
+bib where the author is our author we output the title. This way we output all the titles by this author.
+Note the distict-values function that can be used a a wrapper of an expression to filter duplicate
+elements in a nodeset.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Expected result:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;results&gt;
+ &lt;result&gt;
+   &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+   &lt;title&gt;TCP/IP Illustrated&lt;/title&gt; 
+   &lt;title&gt;Advanced XML Programming in the Unix environment&lt;/title&gt;
+ &lt;/result&gt;
+ &lt;result&gt;
+   &lt;author&gt;&lt;last&gt;Abiteboul&lt;/last&gt;&lt;first&gt;Serge&lt;/first&gt;&lt;/author&gt;
+   &lt;title&gt;Data on the Web&lt;/title&gt;
+ &lt;/result&gt;
+ &lt;result&gt;
+   &lt;author&gt;&lt;last&gt;Buneman&lt;/last&gt;&lt;first&gt;Peter&lt;/first&gt;&lt;/author&gt;
+   &lt;title&gt;Data on the Web&lt;/title&gt;
+ &lt;/result&gt;
+ &lt;result&gt;
+   &lt;author&gt;&lt;last&gt;Suciu&lt;/last&gt;&lt;first&gt;Dan&lt;/first&gt;&lt;/author&gt;
+   &lt;title&gt;Data on the Web&lt;/title&gt;
+ &lt;/result&gt;
+&lt;/results&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="usecase5"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+Use-Case 5
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p><i>For each book found at both bn.com and amazon.com, list the title of the book and its price from each source.</i></p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Solution:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>
+&lt;books-with-prices&gt;
+  {
+    for $b in document("c:\apache\htdocs\phpxmlclasses\bib.xml")//book,
+        $a in document("c:\apache\htdocs\phpxmlclasses\reviews.xml")//entry
+    where $b/title = $a/title
+    return
+        &lt;book-with-prices&gt;
+            { $b/title }
+            &lt;price-amazon&gt;{ $a/price/text() }&lt;/price-amazon&gt;
+            &lt;price-bn&gt;{ $b/price/text() }&lt;/price-bn&gt;
+        &lt;/book-with-prices&gt;
+  }
+&lt;/books-with-prices&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Comment: This is avery nice example since two XML documents are "joined". We retrieve all the books
+from bib.xml and all the reviews from reviews.xml and we filter matching the titles (the join condition).
+Then we just list the price a book has in one document and the other one. Easy to think, easy to write
+and the result is just what we wanted!</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Expected result:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;books-with-prices&gt;
+ &lt;book-with-prices&gt;
+   &lt;title&gt;TCP/IP Illustrated&lt;/title&gt;
+   &lt;price-amazon&gt;65.95&lt;/price-amazon&gt;
+   &lt;price-bn&gt; 65.95&lt;/price-bn&gt;
+ &lt;/book-with-prices&gt;
+ &lt;book-with-prices&gt;
+   &lt;title&gt;Data on the Web&lt;/title&gt;
+   &lt;price-amazon&gt;34.95&lt;/price-amazon&gt;
+   &lt;price-bn&gt; 39.95&lt;/price-bn&gt;
+ &lt;/book-with-prices&gt;
+&lt;/books-with-prices&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="usecase6"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+Use-Case 6
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p><i>For each book that has at least one author, list the title and first two authors, and an empty "et-al" element if the book has additional authors.</i></p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Solution:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre><bib>
+  {
+    for $b in xmlmem($bib)//book
+    where count($b/author) > 2
+    return
+        <book>
+            { $b/title }
+            {
+                for $a in $b/author[position()<=2]  
+                return {$a}
+            }
+            <et-al />
+            </book>
+  }
+
+  {
+    for $b in xmlmem($bib)//book
+    where count($b/author) <= 2
+    return
+        <book>
+            { $b/title }
+            {
+                for $a in $b/author[position()<=2]  
+                return {$a}
+            }
+            </book>
+  }
+
+</bib>
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Comment: The Xquery Lite 1.0 language doesn't have an IF statement yet (it is planned for 1.1) so we have to split
+the query in two parts one for the books with more than two authors and another part for the books with 2 or less authors. Note
+that the books document has to be parse twice which is not good. This will be solved when the if statement is ready meanwhile
+we cansee that the use-case can be solved anyway.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Expected result:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;bib&gt;
+ &lt;book&gt;
+   &lt;title&gt;Data on the Web&lt;/title&gt;
+   &lt;author&gt;&lt;last&gt;Abiteboul&lt;/last&gt;&lt;first&gt;Serge&lt;/first&gt;&lt;/author&gt; 
+   &lt;author&gt;&lt;last&gt;Buneman&lt;/last&gt;&lt;first&gt;Peter&lt;/first&gt;&lt;/author&gt;
+   &lt;et-al /&gt;
+ &lt;/book&gt;
+ &lt;book&gt;
+   &lt;title&gt;TCP/IP Illustrated&lt;/title&gt;
+   &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+ &lt;/book&gt;
+ &lt;book&gt;
+   &lt;title&gt;Advanced XML Programming in the Unix environment&lt;/title&gt;
+   &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+ &lt;/book&gt;
+ &lt;book&gt;
+   &lt;title&gt;The Economics of Technology and Content for Digital TV&lt;/title&gt;
+  &lt;/book&gt;
+&lt;/bib&gt;
+</pre>
+  </td>
+</tr>
+</table>
+
+<!--
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="text">
+  Use-Case 7
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p><i></i></p>  
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Solution:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>
+
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Comment:</p>
+<p>Expected result:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>
+
+</pre>
+  </td>
+</tr>
+</table>
+-->
+
+<!--
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="text">
+  Use-Case 8
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p><i></i></p>  
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Solution:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>
+
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Comment:</p>
+<p>Expected result:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>
+
+</pre>
+  </td>
+</tr>
+</table>
+-->
+<br/>
+<a name="usecase9"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+Use-Case 9
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p><i>In the document "bib.xml", find all titles that contain the word "XML", regardless of the level of nesting.</i></p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Solution: </p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;results&gt;
+{
+    for $t in document("c:\apache\htdocs\phpxmlclasses\bib.xml")//title[contains(./text(),"XML")]
+    return {$t}
+  }
+&lt;/results&gt;
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Comment: A straightforward application of an Xpath query. Note how easy it is to enhance Xpath queries giving the result an XML format
+using simple Xquery Lite queries.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Expected result:</p>  
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;results&gt;
+ &lt;title&gt;Advanced XML Programming in the Unix environment&lt;/title&gt;
+&lt;/results&gt; 
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="usecase11"/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+Use-Case 11
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p><i>For each book with an author, return the book with its title and authors. For each book with an editor, return a reference with the book title and the editor's affiliation. </i></p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Solution:</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;bib&gt;
+{
+        for $b in document("c:\apache\htdocs\phpxmlclasses\bib.xml")//book[author]
+        return
+            &lt;book&gt;
+                { $b/title }
+                { $b/author }
+            &lt;/book&gt;
+}
+{
+        for $b in document("c:\apache\htdocs\phpxmlclasses\bib.xml")//book[editor]
+        return
+          &lt;reference&gt;
+            { $b/title }
+            {$b/editor/affiliation}
+          &lt;/reference&gt;
+}
+</bib> 
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Comment: This example shows how to combine two Xquery Lite expressions in a query note the Xpath expression used
+to check if the book element has an author or editor subelement.</p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+<p>Expected result: </p>
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="60%">
+<tr>
+  <td bgcolor="#dddddd" class="text">
+<pre>&lt;bib&gt;
+ &lt;book&gt;
+   &lt;title&gt;TCP/IP Illustrated&lt;/title&gt;
+   &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+ &lt;/book&gt;
+ &lt;book&gt;
+   &lt;title&gt;Advanced XML Programming in the Unix environment&lt;/title&gt;
+   &lt;author&gt;&lt;last&gt;Stevens&lt;/last&gt;&lt;first&gt;W.&lt;/first&gt;&lt;/author&gt;
+ &lt;/book&gt;
+ &lt;book&gt;
+   &lt;title&gt;Data on the Web&lt;/title&gt;
+   &lt;author&gt;&lt;last&gt;Abiteboul&lt;/last&gt;&lt;first&gt;Serge&lt;/first&gt;&lt;/author&gt;
+   &lt;author&gt;&lt;last&gt;Buneman&lt;/last&gt;&lt;first&gt;Peter&lt;/first&gt;&lt;/author&gt;
+   &lt;author&gt;&lt;last&gt;Suciu&lt;/last&gt;&lt;first&gt;Dan&lt;/first&gt;&lt;/author&gt;
+ &lt;/book&gt;
+
+ &lt;reference&gt;
+   &lt;title&gt;The Economics of Technology and Content for Digital TV&lt;/title&gt;
+   &lt;affiliation&gt;CITI&lt;/affiliation&gt;
+ &lt;/reference&gt;
+&lt;/bib&gt; 
+</pre>
+  </td>
+</tr>
+</table>
+<br/>
+<a name="implementations" />
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#ccccff" class="textblbl">
+Implementations
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  There's only one implementation of the Xquery Lite language by the moment:
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">
+  <ul>
+    <li>PHP: <a href="http://phpxmlclasses.sourceforge.net/class_xquery_lite.html">Class Xquery Lite</a> a full Xquery Lite 1.0 implementation for PHP based on the DOM standard. This
+     implementation has a demo site at <a href="http://research.salutia.com/xquery_lite/demo.php">this site</a>
+  </ul>
+  </td>
+</tr>
+</table>
+</html>

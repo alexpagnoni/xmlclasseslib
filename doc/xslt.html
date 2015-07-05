@@ -1,0 +1,405 @@
+<html>
+<head>
+<title>Xslt (class_xslt.php)</title>
+<link rel="stylesheet" href="main.css" type="text/css">
+</head>
+
+<body>
+
+<div align="center">
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#aaaaee" class="textblbl" align="center">Xslt (class_xslt.php)</td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%">
+<tr>
+  <td bgcolor="#eeeeff" class="text">Description: This class is an abstraction class for an
+  XSLT processor, it let's you setup the XML to be processed and the XSLT stylesheet to use
+  from a file or a PHP string. This implementation uses the Sablotron XSLT processor and
+  was updated to work with the new PHP 4.1.x xslt extension.
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+  <td valign="top" class="text" width="50%"><b>NEWS:</b>
+  <ul>
+    <li>5-15-2002 Updated to work under PHP 4.2.x
+  </ul>
+  </td>
+  <td valign="top" width="50%" class="text">
+     This class code as well as the documentation are hosted at <a href="http://www.sourceforge.net">SourceForge</a>
+     please visit our <a href="http://phpxmlclasses.sourceforge.net">SourceForge page</a> for releases, documentation, bug-tracking, support
+     forums and mailing lists.
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td class="textbl" bgcolor="aaaaee" width="50%">Features</td>
+  <td class="textbl" bgcolor="aaaaee" width="50%">To-dos</td>
+</tr>
+</table>
+<table border="1" width="80%" cellpadding="0" cellspacing="0">
+<tr>
+  <td valign="top" bgcolor="eeeeff" class="text" width="50%">
+  <ul>
+    <li>Can receive the XML source as a string or a file (http://) works too.
+    <li>Can receive the XSLT stylesheet as a string or a file (http://) works too.
+  </ul>
+  </td>
+  <td valign="top" bgcolor="ddddff" class="text" width="50%">
+  <ul>
+    <li>Option to cache transformations for incresed speed.
+  </ul>
+  </td>
+  
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+<!--
+  <td valign="top" class="text" width="50%"><b>To-do/future releases:</b>
+  <ul>
+    <li>Class 
+    <li>Class 
+    <li>Class 
+  </ul>
+  </td> -->
+  <td valign="top" width="100%" class="text">
+     Contact: 
+  </td>
+</tr>
+</table>
+<br/>
+<table border="0" bgcolor="ddddff" width="80%">
+<tr>
+<!--
+  <td valign="top" class="text" width="50%"><b>To-do/future releases:</b>
+  <ul>
+    <li>Class 
+    <li>Class 
+    <li>Class 
+  </ul>
+  </td> -->
+  <td valign="top" width="100%" class="text">
+  Detailed description and usage:<br/>
+  Using the class:
+  <pre>
+include_once("class_xslt.php");
+$xslt=new Xslt();
+$xslt->setXml("applications.xml"); // or setXmlString($xml) if the xml is in a php string
+$xslt->setXsl("tr1.xsl");          // or steXslString($xsl) if the xsl is in a php string
+if($xslt->transform()) {
+   $ret=$xslt->getOutput();
+   echo $ret;
+} else {
+   print("Error:".$xslt->getError());
+}</pre>
+  </td>
+</tr>
+</table>
+<br/>
+
+
+<h3>Documentation</h3>
+</div>
+
+
+<h2>Classes</h2>
+<ul>
+  <li><a href="#class19">class_xslt</a></li>
+</ul>
+
+<a name="#class19"></a>
+<h3>class_xslt</h3>
+Extends: None<hr>
+Description: Class to handle XSLT transformations, the XML documents and
+the XSLT stylesheet can be passed as files or PHP strings.<hr>
+<br>
+
+<!-- METHOD SUMMARY -->
+<A NAME="pDomNode_method_summary"><!-- --></A>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=2><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TD>
+</TR>
+
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class19method1">Xslt</A></B>()</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Constructor</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class19method2">destroy</A></B>()</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Destructor</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class19method3">getOutput</A></B>()</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the result of the XSLT transformation</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class19method4">setXmlString</A></B>(string $xml)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the XML to be transformed from a string</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class19method5">setXml</A></B>(string $uri)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the XML to be transformed from a URI</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class19method6">setXslString</A></B>(string $xsl)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the XSLT stylesheet to be used from a string</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class19method7">setXsl</A></B>(string $uri)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the XSLT stylesheet to be used from a URI</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class19method8">transform</A></B>(string $uri)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performs an XSLT transformation</TD>
+</TR>
+<!-- A ROW -->
+<!-- A ROW -->
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string</CODE></FONT></TD>
+          <TD><CODE><B><A HREF="#class19method9">getError</A></B>(string $uri)</CODE>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the error message if a transformation fails</TD>
+</TR>
+<!-- A ROW -->
+</TABLE>
+&nbsp;
+<P>
+<!-- METHOD SUMMARY -->
+
+
+<!-- ============ METHOD DETAIL ========== -->
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TD>
+</TR>
+</TABLE>
+
+<!--  method -->
+<A NAME="#class19method1"><!-- --></A>
+<H3>Xslt</H3>
+
+
+
+<PRE>
+void <B>Xslt</B>(string $uri)</PRE>
+               
+<DL>
+<DD>Constructor (no parameters)<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class19method2"><!-- --></A>
+<H3>destroy</H3>
+
+
+
+<PRE>
+void <B>destroy</B>(string $uri)</PRE>
+               
+<DL>
+<DD>Object destructor should be called to free resources allocated for the Sablotron processor.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class19method3"><!-- --></A>
+<H3>getOutput</H3>
+
+
+
+<PRE>
+string <B>getOutput</B>(string $uri)</PRE>
+               
+<DL>
+<DD>This returns the result of the last XSLT transformation<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>Transformation result's<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class19method4"><!-- --></A>
+<H3>setXmlString</H3>
+
+
+
+<PRE>
+void <B>setXmlString</B>(string $xml)</PRE>
+               
+<DL>
+<DD>This method sets the XML that is going to be transformed from a PHP string.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xml - <br><DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class19method5"><!-- --></A>
+<H3>setXml</H3>
+
+
+
+<PRE>
+void <B>setXml</B>(string $uri)</PRE>
+               
+<DL>
+<DD>This method sets the XML to be transformed from a URI, it can be a file in the local file system or a http:// form URI pointing to an XML file.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $uri - It can be a file, example "foo.xml" or a remote file, example: "http://foo.com/foo.xml"<br><DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class19method6"><!-- --></A>
+<H3>setXslString</H3>
+
+
+
+<PRE>
+void <B>setXslString</B>(string $xsl)</PRE>
+               
+<DL>
+<DD>This method sets the XSLT stylesheet to be used from a PHP string.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $xsl - The XSLT stylesheet as a PHP string<br><DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class19method7"><!-- --></A>
+<H3>setXsl</H3>
+
+
+
+<PRE>
+void <B>setXsl</B>(string $uri)</PRE>
+               
+<DL>
+<DD>This method sets the XSLT stylesheet to be used from a URI, it can be a file in the local file system or a http:// form URI pointing to the location of an XSLT file.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          $uri - Use "foo.xslt" to point to a XSLT file in the local file system or "http://foo.com/foo.xsl" for a remote XSLT stylesheet.<br><DT><B>Returns:</B><DD>Nothing<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class19method8"><!-- --></A>
+<H3>transform</H3>
+
+
+
+<PRE>
+boolean <B>transform</B>(string $uri)</PRE>
+               
+<DL>
+<DD>Once an XML and an XSLT are set this method performs the XSLT transformation, the result can be obtained using the getOutput method.<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>true/false indicating if the transformation was succesful<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!--  method -->
+<A NAME="#class19method9"><!-- --></A>
+<H3>getError</H3>
+
+
+
+<PRE>
+string <B>getError</B>(string $uri)</PRE>
+               
+<DL>
+<DD>This method returns the error message when the transform() method returns false<DD>&nbsp;
+<DL>
+<DT><B>Parameters:</B><DD>
+                          <DT><B>Returns:</B><DD>Error description<DT><B>Throws:</B><DD><CODE>None</CODE>
+</DL>
+</DD>
+</DL>
+<HR>
+<!-- a method -->
+<!-- ============ METHOD DETAIL ========== -->
+
+
+</body>
+</html>

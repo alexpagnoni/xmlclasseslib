@@ -1,0 +1,52 @@
+General information
+-------------------
+
+XmlClasses is a project grouping a set of classes for XML processing using PHP,
+classes will be added frequently to cover new features or to provide
+abstraction layers to existing features.
+
+It is based on PHPXmlClasses by Luis Argerich (see "Additional Information" and
+AUTHORS file).
+
+
+
+License
+-------
+See the file named LICENSE.
+
+
+
+Requirements
+------------
+
+Serverside:
+	A working Ampoliros II platform installation.
+
+Clientside:
+	a web browser with HTML 4.0 and CSS support.
+
+
+
+Installation
+------------
+
+See the file named INSTALL.
+
+
+
+Additional Information
+----------------------
+
+Original PhpXmlClasses official home page:
+	http://sourceforge.net/projects/phpxmlclasses/
+
+Ampoliros official home page:
+	http://www.ampoliros.com/
+
+
+
+Disclaimer
+----------
+
+There is no warranty, expressed or implied, associated with this product.
+Use at your own risk.
